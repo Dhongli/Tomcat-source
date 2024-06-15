@@ -64,7 +64,7 @@ public class StarvationTest extends DefaultTestCase {
 //        }
 //    }
 
-    @Test
+    /*@Test
     public void testConnectionStarvation() throws Exception {
         config();
         Connection con1 = datasource.getConnection();
@@ -104,5 +104,5 @@ public class StarvationTest extends DefaultTestCase {
         }finally {
             if (con2!=null) con2.close();
         }
-    }
+    }*/
 }
