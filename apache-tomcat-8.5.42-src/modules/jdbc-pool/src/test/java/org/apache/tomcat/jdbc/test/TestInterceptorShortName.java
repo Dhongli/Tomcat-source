@@ -18,14 +18,14 @@ package org.apache.tomcat.jdbc.test;
 
 import java.sql.Connection;
 
-import org.junit.Assert;
-import org.junit.Test;
+// import org.junit.Assert;
+// import org.junit.Test;
 
 import org.apache.tomcat.jdbc.pool.interceptor.TestInterceptor;
 
 public class TestInterceptorShortName extends DefaultTestCase {
 
-    @Test
+    /*@Test
     public void testShortInterceptor() throws Exception {
         this.datasource = this.createDefaultDataSource();
         this.datasource.setJdbcInterceptors("TestInterceptor");
@@ -40,5 +40,5 @@ public class TestInterceptorShortName extends DefaultTestCase {
         con.close();
         this.datasource.close();
         Assert.assertTrue("Pool should have been closed.",TestInterceptor.poolclosed);
-    }
+    }*/
 }

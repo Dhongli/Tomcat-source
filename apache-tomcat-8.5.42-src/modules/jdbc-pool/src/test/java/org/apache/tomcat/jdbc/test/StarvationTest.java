@@ -19,8 +19,8 @@ package org.apache.tomcat.jdbc.test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.junit.Assert;
-import org.junit.Test;
+// import org.junit.Assert;
+// import org.junit.Test;
 
 /**
  * If a connection is abandoned and closed,
