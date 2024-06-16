@@ -311,7 +311,7 @@ public final class Bootstrap {
         if (log.isDebugEnabled()) {
             log.debug("Calling startup class " + method);
         }
-        log.info("********>> Bootstrap.load 调用 catalina load方法");
+        System.out.println("********>> Bootstrap.load 调用 catalina load方法");
         method.invoke(catalinaDaemon, param);
 
     }
@@ -501,9 +501,9 @@ public final class Bootstrap {
             } else if (command.equals("start")) {
                 daemon.setAwait(true);
                 // Bootstrap.load 调catalina的load
-                log.info("********>> Bootstrap.load 调catalina的load");
+                System.out.println("********>> Bootstrap.load 调catalina的load");
                 daemon.load(args);
-                log.info("********>> Bootstrap.start 调catalina的start");
+                System.out.println("********>> Bootstrap.start 调catalina的start");
                 daemon.start();
                 if (null == daemon.getServer()) {
                     System.exit(1);

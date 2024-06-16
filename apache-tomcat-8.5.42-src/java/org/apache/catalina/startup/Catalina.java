@@ -545,7 +545,7 @@ public class Catalina {
         initNaming();
 
         // 创建并执行Digester，用于解析 server.xml 和 web.xml 等配置文件
-        log.info("********>> 初始化Digester，用于解析 server.xml 和 web.xml 等配置文件");
+        System.out.println("********>> 初始化Digester，用于解析 server.xml 和 web.xml 等配置文件");
         Digester digester = createStartDigester();
 
         InputSource inputSource = null;
@@ -555,7 +555,7 @@ public class Catalina {
             try {
                 // 获取配置文件 "conf/server.xml"
                 file = configFile();
-                log.info("********>> 读取conf/server.xml file " + file.getPath());
+                System.out.println("********>> 读取conf/server.xml file " + file.getPath());
                 inputStream = new FileInputStream(file);
                 inputSource = new InputSource(file.toURI().toURL().toString());
             } catch (Exception e) {
@@ -611,7 +611,7 @@ public class Catalina {
 
             try {
                 // 解析 server.xml 配置文件
-                log.info("********>> digester开始解析server.xml");
+                System.out.println("********>> digester开始解析server.xml");
                 inputSource.setByteStream(inputStream);
                 digester.push(this);
                 digester.parse(inputSource);
@@ -693,7 +693,7 @@ public class Catalina {
 
         // Start the new server
         try {
-            log.info("********>> catalina.start 调Server的start");
+            System.out.println("********>> catalina.start 调Server的start");
             getServer().start();
         } catch (LifecycleException e) {
             log.fatal(sm.getString("catalina.serverStartFail"), e);

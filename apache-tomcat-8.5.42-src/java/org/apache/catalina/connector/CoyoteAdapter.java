@@ -340,6 +340,8 @@ public class CoyoteAdapter implements Adapter {
                 request.setAsyncSupported(
                         connector.getService().getContainer().getPipeline().isAsyncSupported());
                 // Calling the container
+                System.out.println("********>> CoyoteAdapter 调用容器 Engine");
+                System.out.println("********>> Pipeline 管道，责任链模式，每个容器都有管道，当前容器管道走完就会调用下个容器管道的First");
                 connector.getService().getContainer().getPipeline().getFirst().invoke(
                         request, response);
             }

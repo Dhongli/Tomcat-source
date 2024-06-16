@@ -1069,6 +1069,7 @@ public abstract class AbstractEndpoint<S> {
             if (socketWrapper == null) {
                 return false;
             }
+            System.out.println("********>> 客户端请求来到这里/////具体底层nio实现");
             SocketProcessorBase<S> sc = processorCache.pop();
             if (sc == null) {
                 sc = createSocketProcessor(socketWrapper, event);
@@ -1077,6 +1078,7 @@ public abstract class AbstractEndpoint<S> {
             }
             Executor executor = getExecutor();
             if (dispatch && executor != null) {
+                System.out.println("********>> 将连接交给线程池处理");
                 executor.execute(sc);
             } else {
                 sc.run();
@@ -1202,7 +1204,7 @@ public abstract class AbstractEndpoint<S> {
 
         for (int i = 0; i < count; i++) {
             // 创建接收客户端请求的runnable
-            getLog().info("********>> 创建接收客户端请求的runnable");
+            System.out.println("********>> 创建接收客户端请求的runnable");
             acceptors[i] = createAcceptor();
             String threadName = getName() + "-Acceptor-" + i;
             acceptors[i].setThreadName(threadName);

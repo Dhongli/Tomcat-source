@@ -788,7 +788,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         globalNamingResources.start();
 
         // Start our defined Services
-        log.info("********>> Server.start 调service的start");
+        System.out.println("********>> Server.start 调service的start");
         synchronized (servicesLock) {
             for (int i = 0; i < services.length; i++) {
                 services[i].start();
@@ -873,7 +873,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         }
         // Initialize our defined Services
         // Server中调用Service的初始化，一个server可以有多个service
-        log.info("********>> Server中调用Service的初始化，一个server可以有多个service");
+        System.out.println("********>> Server中调用Service的初始化，一个server可以有多个service");
         for (int i = 0; i < services.length; i++) {
             services[i].init();
         }

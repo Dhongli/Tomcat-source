@@ -211,7 +211,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
      */
     @Override
     public void bind() throws Exception {
-        log.info("********>> Endpoint bind, 实现serverSock 绑定端口号");
+        System.out.println("********>> Endpoint bind, 实现serverSock 绑定端口号");
         if (!getUseInheritedChannel()) {
             serverSock = ServerSocketChannel.open();
             socketProperties.setProperties(serverSock.socket());
@@ -280,7 +280,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                 pollerThread.start();
             }
             // 开启接收客户端请求线程
-            log.info("********>> 开启接收客户端请求线程startAcceptorThreads");
+            System.out.println("********>> 开启接收客户端请求线程startAcceptorThreads");
             startAcceptorThreads();
         }
     }
@@ -372,7 +372,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
     @Override
     protected AbstractEndpoint.Acceptor createAcceptor() {
         // 接收客户端请求的Runnable
-        log.info("********>> 接收客户端请求的Runnable Acceptor");
+        System.out.println("********>> 接收客户端请求的Runnable Acceptor");
         return new Acceptor();
     }
 
@@ -453,7 +453,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
 
         @Override
         public void run() {
-
+            System.out.println("********>> Nio Socket 绑定端口："+getPort()+"，接收请求 ...");
             int errorDelay = 0;
 
             // Loop until we receive a shutdown command
@@ -482,7 +482,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                     try {
                         // Accept the next incoming connection from the server
                         // socket
-                        log.info("********>> 具体在这等待客户端请求socket = serverSock.accept()");
+                        System.out.println("********>> 具体在这等待客户端请求socket = serverSock.accept()");
                         socket = serverSock.accept();
                     } catch (IOException ioe) {
                         // We didn't get a socket
@@ -1462,6 +1462,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
             SelectionKey key = socket.getIOChannel().keyFor(socket.getPoller().getSelector());
 
             try {
+                System.out.println("********>> TCP三次握手");
                 int handshake = -1;
 
                 try {

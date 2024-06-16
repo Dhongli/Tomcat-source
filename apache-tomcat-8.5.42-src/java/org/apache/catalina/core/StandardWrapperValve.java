@@ -100,6 +100,7 @@ final class StandardWrapperValve
         long t1=System.currentTimeMillis();
         requestCount.incrementAndGet();
         StandardWrapper wrapper = (StandardWrapper) getContainer();
+        System.out.println("********>> StandardWrapperValve 初始化servlet");
         Servlet servlet = null;
         Context context = (Context) wrapper.getParent();
 
@@ -131,6 +132,7 @@ final class StandardWrapperValve
         // Allocate a servlet instance to process this request
         try {
             if (!unavailable) {
+                System.out.println("********>> wrapper.allocate() servlet赋值");
                 servlet = wrapper.allocate();
             }
         } catch (UnavailableException e) {
@@ -169,6 +171,7 @@ final class StandardWrapperValve
         request.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR,
                 requestPathMB);
         // Create the filter chain for this request
+        System.out.println("********>> ApplicationFilterChain 过滤器链");
         ApplicationFilterChain filterChain =
                 ApplicationFilterFactory.createFilterChain(request, wrapper, servlet);
 
@@ -196,6 +199,7 @@ final class StandardWrapperValve
                     if (request.isAsyncDispatching()) {
                         request.getAsyncContextInternal().doInternalDispatch();
                     } else {
+                        System.out.println("********>> 执行过滤器链中的过滤器");
                         filterChain.doFilter
                             (request.getRequest(), response.getResponse());
                     }

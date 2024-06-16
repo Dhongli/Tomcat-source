@@ -967,10 +967,10 @@ public class Connector extends LifecycleMBeanBase  {
 
         // Initialize adapter
         // 构造 CoyoteAdapter
-        log.info("********>> Connector 的init中构造 CoyoteAdapter");
+        System.out.println("********>> Connector 的init中构造 CoyoteAdapter");
         adapter = new CoyoteAdapter(this);
         // 将 CoyoteAdapter加入 protocolHandler
-        log.info("********>> 将 CoyoteAdapter加入 protocolHandler");
+        System.out.println("********>> 将 CoyoteAdapter加入 protocolHandler");
         protocolHandler.setAdapter(adapter);
 
         // Make sure parseBodyMethodsSet has a default
@@ -994,7 +994,7 @@ public class Connector extends LifecycleMBeanBase  {
         }
 
         try {
-            log.info("********>> Connector 的init 调用 protocolHandler.init");
+            System.out.println("********>> Connector 的init 调用 protocolHandler.init");
             protocolHandler.init();
         } catch (Exception e) {
             throw new LifecycleException(
@@ -1020,7 +1020,7 @@ public class Connector extends LifecycleMBeanBase  {
         setState(LifecycleState.STARTING);
 
         try {
-            log.info("********>> connector.start 调 protocolHandler 的start");
+            System.out.println("********>> connector.start 调 protocolHandler 的start");
             protocolHandler.start();
         } catch (Exception e) {
             throw new LifecycleException(

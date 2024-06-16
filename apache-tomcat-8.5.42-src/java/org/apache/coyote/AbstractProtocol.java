@@ -578,7 +578,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
         endpoint.setName(endpointName.substring(1, endpointName.length()-1));
         endpoint.setDomain(domain);
 
-        getLog().info("********>> Protocol init 调用endpoint.init");
+        System.out.println("********>> Protocol init 调用endpoint.init");
         endpoint.init();
     }
 
@@ -589,7 +589,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
             getLog().info(sm.getString("abstractProtocolHandler.start", getName()));
         }
 
-        getLog().info("********>> protocolHandler.start 调 endpoint 的start");
+        System.out.println("********>> protocolHandler.start 调 endpoint 的start");
         endpoint.start();
 
         // Start async timeout thread
@@ -720,7 +720,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
             }
 
             S socket = wrapper.getSocket();
-
+            System.out.println("********>> 拿到 processor");
             Processor processor = connections.get(socket);
             if (getLog().isDebugEnabled()) {
                 getLog().debug(sm.getString("abstractConnectionHandler.connectionsGet",
@@ -807,6 +807,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
 
                 SocketState state = SocketState.CLOSED;
                 do {
+                    System.out.println("********>> EndPoint通过线程池将请求交给processor处理");
                     state = processor.process(wrapper, status);
 
                     if (state == SocketState.UPGRADING) {

@@ -228,6 +228,7 @@ public final class ApplicationFilterChain implements FilterChain {
                                            args,
                                            principal);
             } else {
+                System.out.println("********>> 过滤器链执行结束，执行HttpServlet.service(request, response)");
                 servlet.service(request, response);
             }
         } catch (IOException | ServletException | RuntimeException e) {
