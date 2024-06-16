@@ -211,7 +211,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
      */
     @Override
     public void bind() throws Exception {
-
+        log.info("********>> Endpoint bind, 实现serverSock 绑定端口号");
         if (!getUseInheritedChannel()) {
             serverSock = ServerSocketChannel.open();
             socketProperties.setProperties(serverSock.socket());
@@ -279,7 +279,8 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                 pollerThread.setDaemon(true);
                 pollerThread.start();
             }
-
+            // 开启接收客户端请求线程
+            log.info("********>> 开启接收客户端请求线程startAcceptorThreads");
             startAcceptorThreads();
         }
     }
@@ -370,6 +371,8 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
 
     @Override
     protected AbstractEndpoint.Acceptor createAcceptor() {
+        // 接收客户端请求的Runnable
+        log.info("********>> 接收客户端请求的Runnable Acceptor");
         return new Acceptor();
     }
 
@@ -479,6 +482,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                     try {
                         // Accept the next incoming connection from the server
                         // socket
+                        log.info("********>> 具体在这等待客户端请求socket = serverSock.accept()");
                         socket = serverSock.accept();
                     } catch (IOException ioe) {
                         // We didn't get a socket

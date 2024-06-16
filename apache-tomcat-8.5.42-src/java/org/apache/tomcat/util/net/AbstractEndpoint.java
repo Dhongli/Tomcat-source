@@ -1114,7 +1114,9 @@ public abstract class AbstractEndpoint<S> {
     public abstract void stopInternal() throws Exception;
 
     public void init() throws Exception {
+        // Endpoint是实现TCP/IP传输层的方法
         if (bindOnInit) {
+            // bind里具体实现ServeSock
             bind();
             bindState = BindState.BOUND_ON_INIT;
         }
@@ -1199,6 +1201,8 @@ public abstract class AbstractEndpoint<S> {
         acceptors = new Acceptor[count];
 
         for (int i = 0; i < count; i++) {
+            // 创建接收客户端请求的runnable
+            getLog().info("********>> 创建接收客户端请求的runnable");
             acceptors[i] = createAcceptor();
             String threadName = getName() + "-Acceptor-" + i;
             acceptors[i].setThreadName(threadName);

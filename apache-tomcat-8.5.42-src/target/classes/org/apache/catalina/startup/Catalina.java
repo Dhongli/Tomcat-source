@@ -530,6 +530,7 @@ public class Catalina {
      */
     public void load() {
 
+        // 检查是否已经加载，避免重复加载
         if (loaded) {
             return;
         }
@@ -537,12 +538,14 @@ public class Catalina {
 
         long t1 = System.nanoTime();
 
+        // 初始化目录结构
         initDirs();
 
-        // Before digester - it may be needed
+        // 初始化命名资源，在解析配置文件前可能需要使用
         initNaming();
 
-        // Create and execute our Digester
+        // 创建并执行Digester，用于解析 server.xml 和 web.xml 等配置文件
+        log.info("********>> 初始化Digester，用于解析 server.xml 和 web.xml 等配置文件");
         Digester digester = createStartDigester();
 
         InputSource inputSource = null;
@@ -550,7 +553,9 @@ public class Catalina {
         File file = null;
         try {
             try {
+                // 获取配置文件 "conf/server.xml"
                 file = configFile();
+                log.info("********>> 读取conf/server.xml file " + file.getPath());
                 inputStream = new FileInputStream(file);
                 inputSource = new InputSource(file.toURI().toURL().toString());
             } catch (Exception e) {
@@ -561,10 +566,10 @@ public class Catalina {
             if (inputStream == null) {
                 try {
                     inputStream = getClass().getClassLoader()
-                        .getResourceAsStream(getConfigFile());
+                            .getResourceAsStream(getConfigFile());
                     inputSource = new InputSource
-                        (getClass().getClassLoader()
-                         .getResource(getConfigFile()).toString());
+                            (getClass().getClassLoader()
+                                    .getResource(getConfigFile()).toString());
                 } catch (Exception e) {
                     if (log.isDebugEnabled()) {
                         log.debug(sm.getString("catalina.configFail",
@@ -573,15 +578,14 @@ public class Catalina {
                 }
             }
 
-            // This should be included in catalina.jar
-            // Alternative: don't bother with xml, just create it manually.
+            // 作为备用方案，从 "server-embed.xml" 加载配置
             if (inputStream == null) {
                 try {
                     inputStream = getClass().getClassLoader()
                             .getResourceAsStream("server-embed.xml");
                     inputSource = new InputSource
-                    (getClass().getClassLoader()
-                            .getResource("server-embed.xml").toString());
+                            (getClass().getClassLoader()
+                                    .getResource("server-embed.xml").toString());
                 } catch (Exception e) {
                     if (log.isDebugEnabled()) {
                         log.debug(sm.getString("catalina.configFail",
@@ -590,7 +594,7 @@ public class Catalina {
                 }
             }
 
-
+            // 如果找不到配置文件，记录警告并返回
             if (inputStream == null || inputSource == null) {
                 if  (file == null) {
                     log.warn(sm.getString("catalina.configFail",
@@ -606,6 +610,8 @@ public class Catalina {
             }
 
             try {
+                // 解析 server.xml 配置文件
+                log.info("********>> digester开始解析server.xml");
                 inputSource.setByteStream(inputStream);
                 digester.push(this);
                 digester.parse(inputSource);
@@ -618,24 +624,26 @@ public class Catalina {
                 return;
             }
         } finally {
+            // 关闭输入流
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    // Ignore
+                    // 忽略关闭流的异常
                 }
             }
         }
 
+        // 设置Server对象的Catalina属性
         getServer().setCatalina(this);
         getServer().setCatalinaHome(Bootstrap.getCatalinaHomeFile());
         getServer().setCatalinaBase(Bootstrap.getCatalinaBaseFile());
 
-        // Stream redirection
+        // 重定向标准输入输出流
         initStreams();
 
-        // Start the new server
         try {
+            // 启动新的Server实例
             getServer().init();
         } catch (LifecycleException e) {
             if (Boolean.getBoolean("org.apache.catalina.startup.EXIT_ON_INIT_FAILURE")) {
@@ -685,6 +693,7 @@ public class Catalina {
 
         // Start the new server
         try {
+            log.info("********>> catalina.start 调Server的start");
             getServer().start();
         } catch (LifecycleException e) {
             log.fatal(sm.getString("catalina.serverStartFail"), e);

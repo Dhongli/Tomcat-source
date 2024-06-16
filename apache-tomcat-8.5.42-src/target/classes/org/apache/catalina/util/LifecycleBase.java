@@ -96,6 +96,12 @@ public abstract class LifecycleBase implements Lifecycle {
     }
 
 
+    /**
+     * @Description: 公有组件的init,公共流程抽取出来
+     * @date 2024-06-16 17:49
+     * @param
+     * @return
+     */
     @Override
     public final synchronized void init() throws LifecycleException {
         if (!state.equals(LifecycleState.NEW)) {
@@ -104,6 +110,7 @@ public abstract class LifecycleBase implements Lifecycle {
 
         try {
             setStateInternal(LifecycleState.INITIALIZING, null, false);
+            // 抽象方法，模板方法设计模式，具体实现在子类中
             initInternal();
             setStateInternal(LifecycleState.INITIALIZED, null, false);
         } catch (Throwable t) {

@@ -578,6 +578,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
         endpoint.setName(endpointName.substring(1, endpointName.length()-1));
         endpoint.setDomain(domain);
 
+        getLog().info("********>> Protocol init 调用endpoint.init");
         endpoint.init();
     }
 
@@ -588,6 +589,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
             getLog().info(sm.getString("abstractProtocolHandler.start", getName()));
         }
 
+        getLog().info("********>> protocolHandler.start 调 endpoint 的start");
         endpoint.start();
 
         // Start async timeout thread
